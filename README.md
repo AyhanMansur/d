@@ -1,4 +1,4 @@
-# 🛡️ AyhanxGurd-Fredom iran Advanced Multi-Hop Privacy Bridge
+# 🛡️ Ayhanx-Fredom Advanced Multi-Hop Privacy Bridge
 
 > **A highly resilient, traffic-obfuscated privacy infrastructure combining WireGuard, Custom Python Proxies, and Cloudflare DoH.**
 
