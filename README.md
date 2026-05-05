@@ -1,7 +1,6 @@
-# 🛡️ Ayhanx-Fredom Advanced Multi-Hop Privacy Bridge
 
-> **A highly resilient, traffic-obfuscated privacy infrastructure combining WireGuard, Custom Python Proxies, and Cloudflare DoH.**
-
+# 🛡️ AyhanX-Freedom: پل حریم خصوصی چندلایه پیشرفته
+> **یک زیرساخت حریم خصوصی مقاوم و پیشرفته که ترکیبی از WireGuard، پروکسی‌های پایتون سفارشی و Cloudflare DoH است.**
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)](https://www.python.org/)
 [![WireGuard](https://img.shields.io/badge/Protocol-WireGuard-green?logo=wireguard)](https://www.wireguard.com/)
@@ -9,215 +8,228 @@
 
 ---
 
-## 🚀 Overview
+## 🚀 نمای کلی
+**AyhanX-Freedom** تنها یک VPN نیست؛ بلکه یک **معماری چندلایه حریم خصوصی** است که برای دور زدن فیلترینگ هوشمند (DPI) و سانسور شبکه طراحی شده است. با ترکیب **نرمال‌سازی ترافیک**، **پل‌زنی چندگانه (Multi-Hop)** و **جلوگیری از نشت DNS از طریق DoH**، این پروژه تضمین می‌کند که ردپای دیجیتال شما برای ارائه‌دهندگان خدمات اینترنت (ISP) و فایروال‌های ملی کاملاً نامرئی بماند.
 
-`AyhanxGurd-Fredom iran` is not just a VPN; it is a **multi-layered privacy architecture** designed to bypass advanced DPI (Deep Packet Inspection) and network censorship. By combining **traffic normalization**, **multi-hop bridging**, and **DNS-over-HTTPS (DoH)** leakage prevention, this project ensures that your digital footprint remains invisible to local ISPs and national firewalls.
-Here is a comprehensive, deep-dive `README.md` for your project. This document is designed to be professional, technically rigorous, and educational, explaining the "why" and "how" behind every architectural decision.
+این مستندات به صورت عمیق و مهندسی‌شده نوشته شده است تا «چرایی» و «چگونگی» پشت هر تصمیم معماری را توضیح دهد.
 
-You can copy and paste the content below directly into a `README.md` file in your GitHub repository.
+---
 
-***
-
-# AyhanX-fredom: Advanced Multi-Hop Obfuscated Proxy Infrastructure
+# AyhanX-Freedom: زیرساخت پروکسی نامرئی چندلایه
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Sing-Box](https://img.shields.io/badge/Sing--Box-v1.8+-green.svg)](https://github.com/SagerNet/sing-box)
 [![WireGuard](https://img.shields.io/badge/WireGuard-v1.0+-blue.svg)](https://www.wireguard.com/)
 [![Ubuntu](https://img.shields.io/badge/OS-Ubuntu%2022.04+-informational.svg)](https://ubuntu.com/)
 
-## 📖 Table of Contents
-## ⚡ Quick Links
-- 🚀 **[Jump to Installation](#-step-by-step-installation-guide)**
-- 🔑 **[Key Generation Guide](#phase-3-reality-key-generation)**
-- 🛡️ **[Security Best Practices](#-security-analysis)**
-- 🐛 **[Need Help?](#-troubleshooting--maintenance)**
+## 📖 فهرست مطالب
+| بخش | توضیحات |
+| :--- | :--- |
+| 🌍 **[۱. نمای کلی پروژه](#-نمای-کلی-پروژه)** | خلاصه اهداف، ویژگی‌ها و معماری پروژه. |
+| 🏗️ **[۲. معماری و فلسفه طراحی](#-معماری-و-فلسفه-طراحی)** | بررسی دقیق لایه‌های امنیتی و دلایل انتخاب پروتکل‌ها. |
+| 🛡️ **[۳. تحلیل امنیتی](#-تحلیل-امنیتی)** | مکانیزم‌های دفاعی و مقابله با تهدیدات. |
+| 📦 **[۴. پیش‌نیازها](#-پیش-نیازها)** | نیازمندی‌های سخت‌افزاری و نرم‌افزاری. |
+| 🛠️ **[۵. راهنمای نصب گام‌به‌گام](#-راهنمای-نصب-گام‌به-گام)** | دستورات دقیق برای راه‌اندازی کامل. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۱: آماده‌سازی سیستم](#phase-1-آماده‌سازی-سیستم)** | به‌روزرسانی و تنظیم فایروال. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۲: نصب Sing-Box (لایه ۱)](#phase-2-نصب-sing-box-لایه-۱)** | نصب هسته اصلی پروکسی. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۳: تولید کلیدهای Reality](#phase-3-تولید-کلیدهای-reality)** | ایجاد کلیدهای رمزنگاری برای پنهان‌سازی. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۴: پیکربندی سرور ترکیه](#phase-4-پیکربندی-سرور-ترکیه)** | تنظیم سرور میانی برای عبور از فیلترینگ. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۵: پیکربندی کلاینت ایران](#phase-5-پیکربندی-کلاینت-ایران)** | اتصال سرور ایران به ترکیه. |
+| &nbsp;&nbsp;&nbsp;&nbsp;🔹 **[فاز ۶: تنظیم WireGuard (لایه ۲)](#phase-6-تنظیم-wireguard-لایه-۲)** | ایجاد تونل امن بین ترکیه و آلمان. |
+| 🐛 **[۶. عیب‌یابی و نگهداری](#-عیب‌یابی-و-نگهداری)** | رفع مشکلات رایج و بررسی لاگ‌ها. |
+| ⚖️ **[۷. سلب مسئولیت](#-سلب-مسئولیت)** | نکات قانونی و حقوقی. |
+
+## ⚡ لینک‌های سریع
+- 🚀 **[پرش به نصب](#-راهنمای-نصب-گام‌به-گام)**
+- 🔑 **[راهنمای تولید کلید](#phase-3-تولید-کلیدهای-reality)**
+- 🛡️ **[بهترین شیوه‌های امنیتی](#-تحلیل-امنیتی)**
+- 🐛 **[نیاز به کمک دارید؟](#-عیب‌یابی-و-نگهداری)**
 
 ---
 
-## 🌍 Project Overview
+## 🌍 نمای کلی پروژه
 
-**MHR-Chain** is a resilient, multi-layered network infrastructure designed to bypass advanced state-level internet censorship, Deep Packet Inspection (DPI), and selective blackouts. Unlike standard VPN solutions that rely on single-point-of-failure connections, MHR-Chain utilizes a **three-node architecture** combining **Traffic Obfuscation** and **Secure Tunneling**.
+**AyhanX-Freedom** یک زیرساخت شبکه چندلایه و مقاوم است که برای دور زدن سانسور اینترنتی سطح دولت‌ها، فیلترینگ هوشمند (DPI) و قطع‌های انتخابی اینترنت طراحی شده است. برخلاف راه‌حل‌های VPN استاندارد که به اتصال تک‌نقطه‌ای وابسته‌اند، AyhanX-Freedom از یک **معماری سه‌نودی** استفاده می‌کند که **پنهان‌سازی ترافیک** و **تونل‌سازی امن** را ترکیب می‌کند.
 
-This project does not just "hide" traffic; it makes the traffic indistinguishable from legitimate, everyday web browsing, rendering it invisible to sophisticated censorship systems like those used in restrictive internet environments.
+این پروژه ترافیک شما را فقط "پنهان" نمی‌کند، بلکه آن را از ترافیک عادی وب غیرقابل تشخیص می‌سازد و آن را برای سیستم‌های سانسور پیشرفته (مانند آنچه در محیط‌های اینترنت محدودشده استفاده می‌شود) نامرئی می‌کند.
 
-### Key Features:
-- **State-Grade Obfuscation:** Uses `VLESS + Reality` protocol to mimic standard HTTPS traffic.
-- **Multi-Hop Resilience:** Routes traffic through Iran → Turkey → Germany to mitigate localized outages.
-- **High Performance:** Utilizes `WireGuard` for low-latency internal routing and `Sing-Box` for efficient packet handling.
-- **Zero-Cost Entry (Optional):** Can be adapted to use free cloud resources, though this guide focuses on dedicated VPS for stability.
-- **DNS Leak Protection:** Configured to force all DNS queries through the secure tunnel.
+### ویژگی‌های کلیدی:
+- **پنهان‌سازی در سطح دولت:** استفاده از پروتکل `VLESS + Reality` برای شبیه‌سازی ترافیک استاندارد HTTPS.
+- **مقاومت چندلایه (Multi-Hop):** مسیریابی ترافیک از ایران → ترکیه → آلمان برای کاهش اثر قطع‌های محلی.
+- **عملکرد بالا:** استفاده از `WireGuard` برای مسیریابی داخلی با تأخیر کم و `Sing-Box` برای مدیریت کارآمد بسته‌ها.
+- **جلوگیری از نشت DNS:** پیکربندی شده برای هدایت تمام درخواست‌های DNS از طریق تونل امن.
 
 ---
 
-## 🏗️ Architecture & Design Philosophy
+## 🏗️ معماری و فلسفه طراحی
 
-The infrastructure is built on two distinct layers, each serving a specific purpose in the chain of anonymity and connectivity.
+این زیرساخت بر دو لایه متمایز بنا شده است که هر کدام هدف خاصی در زنجیره ارتباطات و ناشناس‌سازی دارند.
 
-### 1. Layer 1: The Obfuscation Bridge (Iran → Turkey)
-**Protocol:** `VLESS` with `Reality` transport.
+### ۱. لایه ۱: پل پنهان‌سازی (ایران → ترکیه)
+**پروتکل:** `VLESS` با انتقال `Reality`.
 
-The primary challenge in highly censored networks is **DPI (Deep Packet Inspection)**. Traditional protocols like OpenVPN, Shadowsocks, or even raw WireGuard have distinct "fingerprints" (packet sizes, handshake patterns, TLS signatures) that allow firewalls to identify and block them.
+چالش اصلی در شبکه‌های به شدت سانسور شده، **DPI (بازرسی عمیق بسته)** است. پروتکل‌های سنتی مانند OpenVPN، Shadowsocks یا حتی WireGuard خام، دارای "اثر انگشت" (Fingerprint) مشخصی (اندازه بسته، الگوهای دست‌تکانی، امضای TLS) هستند که به فایروال‌ها اجازه می‌دهد آن‌ها را شناسایی و مسدود کنند.
 
-**How Reality solves this:**
-- **SNI Hiding:** The `Server Name Indication` (SNI) in the TLS handshake is hidden. The client claims to connect to a legitimate public server (e.g., `www.google.com`).
-- **Certificate Spoofing:** The server presents a valid certificate for that public domain. The firewall sees a valid HTTPS connection to Google.
-- **Handshake Verification:** The `Reality` protocol uses a public/private key pair to verify that the client is authorized without revealing the actual server IP to the firewall.
-- **Result:** To the censor, this traffic looks exactly like a user visiting Google.com. It cannot be blocked without blocking Google.com for everyone.
+**چگونه Reality این مشکل را حل می‌کند؟**
+- **پنهان‌سازی SNI:** شاخص نام سرور (SNI) در دست‌تکانی TLS پنهان می‌شود. کلاینت ادعا می‌کند که به یک سرور عمومی معتبر (مثلاً `www.google.com`) متصل است.
+- **جعل گواهی:** سرور یک گواهی معتبر برای آن دامنه عمومی ارائه می‌دهد. فایروال یک اتصال HTTPS معتبر به گوگل را می‌بیند.
+- **تأییدیه دست‌تکانی:** پروتکل `Reality` از یک جفت کلید عمومی/خصوصی استفاده می‌کند تا تأیید کند که کلاینت مجاز است، بدون اینکه IP واقعی سرور را به فایروال نشان دهد.
+- **نتیجه:** برای سانسورگر، این ترافیک دقیقاً شبیه کاربری است که به Google.com مراجعه می‌کند. نمی‌توان آن را مسدود کرد مگر اینکه Google.com را برای همه مسدود کند.
 
-### 2. Layer 2: The Secure Tunnel (Turkey → Germany)
-**Protocol:** `WireGuard`.
+### ۲. لایه ۲: تونل امن (ترکیه → آلمان)
+**پروتکل:** `WireGuard`.
 
-Once traffic escapes the censored network (Iran) and reaches a neutral jurisdiction (Turkey), the need for heavy obfuscation decreases. However, we still need speed and privacy.
+وقتی ترافیک از شبکه سانسور شده (ایران) خارج شد و به یک حوزه قضایی خنثی (ترکیه) رسید، نیاز به پنهان‌سازی سنگین کاهش می‌یابد. با این حال، ما همچنان به سرعت و حریم خصوصی نیاز داریم.
 
-**Why WireGuard?**
-- **Speed:** It is significantly faster than IPsec or OpenVPN due to its minimalistic kernel-space implementation.
-- **Privacy:** It uses modern cryptographic primitives (Noise Protocol Framework).
-- **Stability:** It handles NAT traversal and roaming better than most protocols.
-- **Internal Routing:** It creates a private LAN between the Turkey and Germany nodes, ensuring that traffic exiting to the global internet comes from a clean, unrestricted IP address.
+**چرا WireGuard؟**
+- **سرعت:** به دلیل پیاده‌سازی مینیمالیستی در فضای کرنل، به طور قابل توجهی سریع‌تر از IPsec یا OpenVPN است.
+- **حریم خصوصی:** از اصول رمزنگاری مدرن (Noise Protocol Framework) استفاده می‌کند.
+- **پایداری:** عبور از NAT و تغییر نقطه اتصال را بهتر از اکثر پروتکل‌ها مدیریت می‌کند.
+- **مسیریابی داخلی:** یک LAN خصوصی بین نودهای ترکیه و آلمان ایجاد می‌کند و تضمین می‌کند که ترافیک خروجی به اینترنت جهانی از یک IP تمیز و بدون محدودیت خارج شود.
 
-### Visual Flow
-```mermaid
+### جریان بصری ترافیک
+```text
 ┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│  VPS Iran   │────▶│ VPS Turkey   │────▶│ VPS Germany  │────▶│Global Internet│
-│  (Client)   │     │ (Obfuscator) │     │  (Exit Node) │     │              │
+│  VPS ایران  │────▶│ VPS ترکیه    │────▶│ VPS آلمان   │────▶│ اینترنت جهانی│
+│  (کلاینت)    │     │ (پنهان‌ساز)  │     │ (گره خروجی)  │     │              │
 └─────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
        │                   │                      │
-       │  VLESS+Reality    │  WireGuard           │  Clean IP
-       │  (HTTPS Mimic)    │  (Encrypted Tunnel)  │
+       │  VLESS+Reality    │  WireGuard           │  IP تمیز
+       │  (شبیه‌سازی HTTPS)│  (تونل رمزنگاری شده) │
        └───────────────────┴──────────────────────┘
 ```
 
 ---
 
-## 🛡️ Security Analysis
+## 🛡️ تحلیل امنیتی
 
-| Component | Security Mechanism | Threat Mitigation |
+| جزء | مکانیزم امنیتی | مقابله با تهدید |
 | :--- | :--- | :--- |
-| **Sing-Box (Iran)** | `obfs` (obfuscation) & TLS 1.3 | Prevents DPI from identifying the protocol. Blocks Man-in-the-Middle (MitM) attacks via certificate pinning. |
-| **Reality Protocol** | Public Key Cryptography | Prevents server spoofing. Ensures only authorized clients can connect. |
-| **WireGuard** | ChaCha20-Poly1305 Encryption | Provides strong confidentiality and integrity. Resists brute-force attacks. |
-| **Firewall (UFW)** | Port Restriction | Only opens necessary ports (443 for HTTPS, 51820 for WG). Reduces attack surface. |
+| **Sing-Box (ایران)** | `obfs` (پنهان‌سازی) و TLS 1.3 | جلوگیری از شناسایی پروتکل توسط DPI. مسدود کردن حملات مرد میانی (MitM) با پین کردن گواهی. |
+| **پروتکل Reality** | رمزنگاری کلید عمومی | جلوگیری از جعل سرور. اطمینان از اینکه فقط کلاینت‌های مجاز می‌توانند متصل شوند. |
+| **WireGuard** | رمزنگاری ChaCha20-Poly1305 | تأمین محرمانگی و یکپارچگی قوی. مقاومت در برابر حملات نیروی برن (Brute-force). |
+| **فایروال (UFW)** | محدودیت پورت | فقط پورت‌های ضروری (443 برای HTTPS، 51820 برای WG) باز می‌شوند. سطح حمله کاهش می‌یابد. |
 
-> **Note:** Security is only as strong as the keys. **Never share your `private.key` or `UUID` publicly.** If compromised, regenerate keys immediately.
-
----
-
-## 📦 Prerequisites
-
-Before beginning, ensure you have the following:
-
-1.  **Three VPS Servers:**
-    -   **VPS 1 (Iran):** Ideally located in Iran to bypass local routing restrictions. OS: Ubuntu 22.04 LTS.
-    -   **VPS 2 (Turkey):** A neutral location with good connectivity to Iran. OS: Ubuntu 22.04 LTS.
-    -   **VPS 3 (Germany):** A location with unrestricted internet access. OS: Ubuntu 22.04 LTS.
-2.  **Root Access:** SSH root access to all three servers.
-3.  **Basic Knowledge:** Familiarity with Linux command line, `nano` editor, and SSH.
+> **نکته:** امنیت تنها به اندازه کلیدهای شما قوی است. **هرگز `private.key` یا `UUID` خود را به صورت عمومی به اشتراک نگذارید.** در صورت نفوذ، بلافاصله کلیدها را تغییر دهید.
 
 ---
 
-## 🛠️ Step-by-Step Installation Guide
+## 📦 پیش‌نیازها
 
-### Phase 1: System Preparation
+قبل از شروع، مطمئن شوید موارد زیر را دارید:
 
-We start by updating the system packages and configuring the firewall on **all three servers**. This ensures a clean, secure baseline.
+1.  **سه سرور مجازی (VPS):**
+    -   **VPS 1 (ایران):** ایده‌آل است که در ایران مستقر باشد تا محدودیت‌های مسیریابی محلی را دور بزند. سیستم‌عامل: Ubuntu 22.04 LTS.
+    -   **VPS 2 (ترکیه):** یک موقعیت خنثی با اتصال خوب به ایران. سیستم‌عامل: Ubuntu 22.04 LTS.
+    -   **VPS 3 (آلمان):** یک موقعیت با دسترسی آزاد به اینترنت جهانی. سیستم‌عامل: Ubuntu 22.04 LTS.
+2.  **دسترسی روت:** دسترسی SSH روت به هر سه سرور.
+3.  **دانش پایه:** آشنایی با خط فرمان لینوکس، ویرایشگر `nano` و SSH.
 
-**Execute on ALL servers (Iran, Turkey, Germany):**
+---
+
+## 🛠️ راهنمای نصب گام‌به‌گام
+
+### فاز ۱: آماده‌سازی سیستم
+
+ما با به‌روزرسانی بسته‌های سیستمی و پیکربندی فایروال روی **هر سه سرور** شروع می‌کنیم. این کار یک پایه امن و تمیز تضمین می‌کند.
+
+**اجرا روی همه سرورها (ایران، ترکیه، آلمان):**
 
 ```bash
-# Update package lists and upgrade existing packages
+# به‌روزرسانی لیست بسته‌ها و ارتقای بسته‌های موجود
 sudo apt update && sudo apt upgrade -y
 
-# Install essential utilities
-# curl: for downloading files
-# wget: for downloading files
-# git: for version control
-# nano: for editing configuration files
-# ufw: Uncomplicated Firewall for security
+# نصب ابزارهای ضروری
+# curl: برای دانلود فایل‌ها
+# wget: برای دانلود فایل‌ها
+# git: برای کنترل نسخه
+# nano: برای ویرایش فایل‌های پیکربندی
+# ufw: فایروال ناچیز برای امنیت
 sudo apt install curl wget git nano ufw -y
 
-# Configure UFW Firewall
-# Allow SSH so we don't lock ourselves out
+# پیکربندی فایروال UFW
+# اجازه SSH تا از خودمان بیرون نمانیم
 sudo ufw allow OpenSSH
-# Allow TCP 443 for Sing-Box (HTTPS)
+# اجازه TCP 443 برای Sing-Box (HTTPS)
 sudo ufw allow 443/tcp
-# Allow UDP 51820 for WireGuard
+# اجازه UDP 51820 برای WireGuard
 sudo ufw allow 51820/udp
-# Enable the firewall
+# فعال‌سازی فایروال
 sudo ufw enable
 
-# Verify firewall status
+# بررسی وضعیت فایروال
 sudo ufw status verbose
 ```
 
 ---
 
-### Phase 2: Sing-Box Installation (Layer 1)
+### فاز ۲: نصب Sing-Box (لایه ۱)
 
-**Sing-Box** is a universal proxy platform. It supports multiple protocols including VLESS, Reality, and XHTTP. We will install the latest stable version.
+**Sing-Box** یک پلتفرم پروکسی جهانی است. از پروتکل‌های مختلفی از جمله VLESS، Reality و XHTTP پشتیبانی می‌کند. ما آخرین نسخه پایدار را نصب می‌کنیم.
 
-**Execute on VPS Iran and VPS Turkey:**
+**اجرا روی VPS ایران و VPS ترکیه:**
 
 ```bash
-# Define the latest version dynamically
+# تعریف نسخه جدید به صورت پویا
 SINGBOX_VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep '"tag_name"' | sed -E 's/.*"v(.*?)".*/\1/')
 
-# Download the binary
+# دانلود باینری
 curl -L "https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz" -o sing-box.tar.gz
 
-# Extract the archive
+# استخراج آرشیو
 tar -xzf sing-box.tar.gz
 
-# Move the binary to the system path
+# انتقال باینری به مسیر سیستم
 sudo mv sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box /usr/local/bin/
 
-# Make it executable
+# قابل اجرا کردن
 sudo chmod +x /usr/local/bin/sing-box
 
-# Clean up temporary files
+# پاکسازی فایل‌های موقت
 rm sing-box.tar.gz
 rm -rf sing-box-${SINGBOX_VERSION}-linux-amd64
 
-# Verify installation
+# بررسی نصب
 sing-box version
 ```
 
 ---
 
-### Phase 3: Reality Key Generation
+### فاز ۳: تولید کلیدهای Reality
 
-The `Reality` protocol requires a pair of cryptographic keys to verify the client's identity without exposing the server's true nature.
+پروتکل `Reality` به یک جفت کلید رمزنگاری برای تأیید هویت کلاینت بدون افشای ماهیت واقعی سرور نیاز دارد.
 
-**Execute ONLY on VPS Turkey:**
+**تنها روی VPS ترکیه اجرا کنید:**
 
 ```bash
-# Generate a UUID (Universally Unique Identifier) for the user
-# This acts as the username
+# تولید UUID (شناسه یکتای جهانی) برای کاربر
+# این به عنوان نام کاربری عمل می‌کند
 sing-box generate uuid
 
-# Generate Reality Key Pair
-# This creates a public/private key pair for the TLS handshake
+# تولید جفت کلید Reality
+# این یک جفت کلید عمومی/خصوصی برای دست‌تکانی TLS ایجاد می‌کند
 sing-box generate reality-keypair
 ```
 
-**⚠️ IMPORTANT:**
-Copy the output of these commands. You will need:
-1.  The **UUID** (for both server and client configs).
-2.  The **Private Key** (for the Turkey server config).
-3.  The **Public Key** (for the Iran client config).
-4.  A **Short ID**: You can generate a random 8-character string using `openssl rand -hex 4`. Example: `a1b2c3d4`.
+**⚠️ مهم:**
+خروجی این دستورات را کپی کنید. به موارد زیر نیاز خواهید داشت:
+1.  **UUID** (برای پیکربندی هم سرور و هم کلاینت).
+2.  **کلید خصوصی (Private Key)** (برای پیکربندی سرور ترکیه).
+3.  **کلید عمومی (Public Key)** (برای پیکربندی کلاینت ایران).
+4.  یک **Short ID**: می‌توانید یک رشته تصادفی ۸ کاراکتری با استفاده از `openssl rand -hex 4` تولید کنید. مثال: `a1b2c3d4`.
 
 ---
 
-### Phase 4: Server Configuration (Turkey)
+### فاز ۴: پیکربندی سرور ترکیه
 
-Now we configure the Turkey VPS to act as the **Obfuscation Server**. It will listen for VLESS Reality connections on port 443.
+اکنون سرور ترکیه را طوری پیکربندی می‌کنیم که به عنوان **سرور پنهان‌ساز** عمل کند. این سرور برای اتصال‌های VLESS Reality روی پورت 443 گوش می‌دهد.
 
-1.  Create the configuration file:
+1.  فایل پیکربندی را ایجاد کنید:
     ```bash
     sudo nano /etc/sing-box/config.json
     ```
 
-2.  Paste the following configuration. **Replace the placeholders** with your generated keys.
+2.  پیکربندی زیر را پیست کنید. **مقادیر داخل کروشه** را با کلیدهای تولید شده جایگزین کنید.
 
     ```json
     {
@@ -233,7 +245,7 @@ Now we configure the Turkey VPS to act as the **Obfuscation Server**. It will li
           "listen_port": 443,
           "users": [
             {
-              "uuid": "YOUR_GENERATED_UUID_HERE",
+              "uuid": "UUID_تولید_شده_را_اینجا_بگذارید",
               "flow": ""
             }
           ],
@@ -246,9 +258,9 @@ Now we configure the Turkey VPS to act as the **Obfuscation Server**. It will li
                 "server": "www.google.com",
                 "server_port": 443
               },
-              "private_key": "YOUR_PRIVATE_KEY_HERE",
+              "private_key": "کلید_خصوصی_ترکیه_را_اینجا_بگذارید",
               "short_id": [
-                "YOUR_SHORT_ID_HERE"
+                "Short_ID_8_کاراکتری_را_اینجا_بگذارید"
               ]
             }
           }
@@ -263,32 +275,32 @@ Now we configure the Turkey VPS to act as the **Obfuscation Server**. It will li
     }
     ```
 
-    **Explanation of Fields:**
-    -   `listen_port`: 443 is standard HTTPS. Censors rarely block all HTTPS traffic.
-    -   `server_name`: The domain name that will appear in the SNI. We use `www.google.com` to blend in.
-    -   `handshake`: Specifies which server to connect to during the TLS handshake to get a valid certificate.
-    -   `private_key`: The key generated in Phase 3.
+    **توضیحات فیلدها:**
+    -   `listen_port`: پورت 443 پورت استاندارد HTTPS است. سانسورگرها به ندرت تمام ترافیک HTTPS را مسدود می‌کنند.
+    -   `server_name`: نام دامنه‌ای که در SNI ظاهر می‌شود. ما از `www.google.com` استفاده می‌کنیم تا ادغام شود.
+    -   `handshake`: مشخص می‌کند که در حین دست‌تکانی TLS به کدام سرور متصل شویم تا گواهی معتبر بگیریم.
+    -   `private_key`: کلیدی که در فاز ۳ تولید شد.
 
-3.  Save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`).
+3.  ذخیره و خروج (`Ctrl+O`, `Enter`, `Ctrl+X`).
 
-4.  Start the service manually to test:
+4.  سرویس را به صورت دستی برای تست اجرا کنید:
     ```bash
     sudo sing-box run -c /etc/sing-box/config.json &
     ```
-    *Note: The `&` runs it in the background. For production, we will create a systemd service later.*
+    *نکته: علامت `&` آن را در پس‌زمینه اجرا می‌کند. برای تولید نهایی، بعداً یک سرویس systemd ایجاد خواهیم کرد.*
 
 ---
 
-### Phase 5: Client Configuration (Iran)
+### فاز ۵: پیکربندی کلاینت ایران
 
-Now we configure the Iran VPS to connect to the Turkey server. It will act as a **SOCKS5 Proxy** on localhost, allowing other applications to route traffic through it.
+اکنون سرور ایران را طوری پیکربندی می‌کنیم که به سرور ترکیه متصل شود. این سرور به عنوان یک **پروکسی SOCKS5** روی localhost عمل می‌کند و به سایر برنامه‌ها اجازه می‌دهد ترافیک را از طریق آن مسیریابی کنند.
 
-1.  Create the configuration file:
+1.  فایل پیکربندی را ایجاد کنید:
     ```bash
     sudo nano /etc/sing-box/config.json
     ```
 
-2.  Paste the following configuration. **Replace `YOUR_SERVER_IP` with the public IP of the Turkey VPS.**
+2.  پیکربندی زیر را پیست کنید. **`YOUR_SERVER_IP`** را با **آی‌پی عمومی سرور ترکیه** جایگزین کنید.
 
     ```json
     {
@@ -308,17 +320,17 @@ Now we configure the Iran VPS to connect to the Turkey server. It will act as a 
         {
           "type": "vless",
           "tag": "vless-out",
-          "server": "YOUR_SERVER_IP_HERE",
+          "server": "آی‌پی_عمومی_ترکیه_را_اینجا_بگذارید",
           "server_port": 443,
-          "uuid": "YOUR_GENERATED_UUID_HERE",
+          "uuid": "همان_UUID_ترکیه",
           "flow": "",
           "tls": {
             "enabled": true,
             "server_name": "www.google.com",
             "reality": {
               "enabled": true,
-              "public_key": "YOUR_PUBLIC_KEY_HERE",
-              "short_id": "YOUR_SHORT_ID_HERE"
+              "public_key": "کلید_عمومی_ترکیه_را_اینجا_بگذارید",
+              "short_id": "همان_Short_ID_ترکیه"
             }
           }
         },
@@ -333,105 +345,97 @@ Now we configure the Iran VPS to connect to the Turkey server. It will act as a 
     }
     ```
 
-    **Explanation of Fields:**
-    -   `inbounds`: Listens on `127.0.0.1:1080`. This is a standard SOCKS5 port.
-    -   `outbounds`: Points to the Turkey VPS IP.
-    -   `public_key`: The public key generated in Phase 3. This verifies the server's identity.
-    -   `route`: Forces all traffic to go through the `vless-out` outbound.
+    **توضیحات فیلدها:**
+    -   `inbounds`: روی `127.0.0.1:1080` گوش می‌دهد. این یک پورت استاندارد SOCKS5 است.
+    -   `outbounds`: به آی‌پی سرور ترکیه اشاره می‌کند.
+    -   `public_key`: کلید عمومی تولید شده در فاز ۳. هویت سرور را تأیید می‌کند.
+    -   `route`: تمام ترافیک را مجبور می‌کند از خروجی `vless-out` عبور کند.
 
-3.  Save and exit.
+3.  ذخیره و خروج.
 
-4.  Start the service:
+4.  سرویس را اجرا کنید:
     ```bash
     sudo sing-box run -c /etc/sing-box/config.json &
     ```
 
-5.  **Test the Connection:**
-    Run this on the **Iran VPS**:
+5.  **تست اتصال:**
+    این دستور را روی **VPS ایران** اجرا کنید:
     ```bash
     curl -x socks5h://127.0.0.1:1080 ifconfig.me
     ```
-    If successful, you will see the IP address of the **Turkey** or **Germany** VPS. If you see the Iran IP, the connection failed. Check logs with `journalctl -u sing-box` (if using systemd) or check the terminal output.
+    اگر موفقیت‌آمیز بود، باید IP سرور **ترکیه** یا **آلمان** را ببینید. اگر IP ایران را دیدید، اتصال ناموفق بوده است. لاگ‌ها را با `journalctl -u sing-box` بررسی کنید.
 
 ---
 
-### Phase 6: WireGuard Setup (Layer 2)
+### فاز ۶: تنظیم WireGuard (لایه ۲)
 
-Now we connect Turkey to Germany using WireGuard for high-speed internal routing.
+اکنون با استفاده از WireGuard برای مسیریابی داخلی با سرعت بالا، ترکیه را به آلمان متصل می‌کنیم.
 
-#### Step 6.1: Install WireGuard
-
-**Execute on VPS Turkey and VPS Germany:**
+#### گام ۶.۱: نصب WireGuard
+**اجرا روی VPS ترکیه و VPS آلمان:**
 
 ```bash
 sudo apt install wireguard -y
 ```
 
-#### Step 6.2: Generate Keys
-
-**Execute on VPS Turkey and VPS Germany:**
+#### گام ۶.۲: تولید کلیدها
+**اجرا روی VPS ترکیه و VPS آلمان:**
 
 ```bash
 cd /etc/wireguard
 wg genkey | tee private.key | wg pubkey > public.key
 ```
+محتوای `public.key` از **آلمان** را در جای امنی کپی کنید. برای پیکربندی ترکیه به آن نیاز دارید.
 
-Copy the `public.key` content from **Germany** to a safe place. You will need it for the Turkey config.
-
-#### Step 6.3: Configure Turkey (Client to Germany)
-
-Create the config file:
+#### گام ۶.۳: پیکربندی ترکیه (کلاینت به آلمان)
+فایل پیکربندی را ایجاد کنید:
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
-
-Paste the following (Replace placeholders):
+مقادیر زیر را پیست کنید (مقادیر را جایگزین کنید):
 
 ```ini
 [Interface]
 Address = 10.0.0.2/24
-PrivateKey = YOUR_PRIVATE_KEY_FROM_TURKEY
+PrivateKey = کلید_خصوصی_ترکیه
 PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT
 PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT
 
 [Peer]
-PublicKey = YOUR_PUBLIC_KEY_FROM_GERMANY
-Endpoint = YOUR_GERMANY_VPS_IP:51820
+PublicKey = کلید_عمومی_آلمان
+Endpoint = آی‌پی_عمومی_آلمان:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 ```
 
-**Explanation:**
--   `PersistentKeepalive = 25`: Sends a packet every 25 seconds to keep the NAT mapping alive. Crucial for stability.
--   `AllowedIPs = 0.0.0.0/0`: Routes all traffic through this tunnel.
+**توضیحات:**
+-   `PersistentKeepalive = 25`: هر 25 ثانیه یک بسته ارسال می‌کند تا نگاشت NAT زنده بماند. برای پایداری حیاتی است.
+-   `AllowedIPs = 0.0.0.0/0`: تمام ترافیک را از طریق این تونل مسیریابی می‌کند.
 
-#### Step 6.4: Configure Germany (Server from Turkey)
-
-Create the config file:
+#### گام ۶.۴: پیکربندی آلمان (سرور از ترکیه)
+فایل پیکربندی را ایجاد کنید:
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
-
-Paste the following:
+مقادیر زیر را پیست کنید:
 
 ```ini
 [Interface]
 Address = 10.0.0.3/24
-PrivateKey = YOUR_PRIVATE_KEY_FROM_GERMANY
+PrivateKey = کلید_خصوصی_آلمان
 PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT
 PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT
 
 [Peer]
-PublicKey = YOUR_PUBLIC_KEY_FROM_TURKEY
+PublicKey = کلید_عمومی_ترکیه
 AllowedIPs = 10.0.0.2/32
 ```
 
-**Explanation:**
--   `AllowedIPs = 10.0.0.2/32`: Only accepts connections from the Turkey node's IP.
+**توضیحات:**
+-   `AllowedIPs = 10.0.0.2/32`: فقط از آی‌پی نود ترکیه اتصال می‌پذیرد.
 
-#### Step 6.5: Start WireGuard
-
-**Execute on VPS Turkey and VPS Germany:**
+#### گام ۶.۵: شروع WireGuard
+**اجرا روی VPS ترکیه و VPS آلمان:**
 
 ```bash
 sudo systemctl enable wg-quick@wg0
@@ -439,27 +443,24 @@ sudo systemctl start wg-quick@wg0
 sudo systemctl status wg-quick@wg0
 ```
 
-#### Step 6.6: Test WireGuard
-
-**From Turkey VPS:**
+#### گام ۶.۶: تست WireGuard
+**از VPS ترکیه:**
 ```bash
 ping 10.0.0.3
 ```
-If you get replies, the tunnel is up.
+اگر پاسخ دریافت کردید، تونل فعال است.
 
 ---
 
-### Phase 7: Final Integration & Automation
+### فاز ۷: یکپارچه‌سازی نهایی و خودکارسازی
 
-To make these services survive reboots, we should create systemd services. However, for the purpose of this guide, running them in the background (`&`) is sufficient for testing.
+برای اینکه این سرویس‌ها پس از ریستارت زنده بمانند، باید سرویس‌های systemd ایجاد کنیم. اما برای هدف این راهنما، اجرای آن‌ها در پس‌زمینه (`&`) برای تست کافی است.
 
-To make it persistent, you can create a service file:
-
+برای پایدارسازی، می‌توانید یک فایل سرویس ایجاد کنید:
 ```bash
 sudo nano /etc/systemd/system/sing-box.service
 ```
-
-Paste:
+محتوای زیر را پیست کنید:
 ```ini
 [Unit]
 Description=sing-box proxy service
@@ -474,8 +475,7 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 ```
-
-Then:
+سپس:
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable sing-box
@@ -484,35 +484,16 @@ sudo systemctl start sing-box
 
 ---
 
-## 🐛 Troubleshooting & Maintenance
+## 🐛 عیب‌یابی و نگهداری
 
-### 1. Connection Refused (Iran to Turkey)
--   **Check IP:** Ensure `YOUR_SERVER_IP_HERE` in the Iran config is the *public* IP of the Turkey VPS, not the internal WireGuard IP.
--   **Check Firewall:** Ensure port 443 is open on the Turkey VPS (`sudo ufw allow 443/tcp`).
--   **Check Logs:** Run `sudo sing-box run -c /etc/sing-box/config.json` (without `&`) to see real-time errors.
+### ۱. اتصال رد شد (ایران به ترکیه)
+-   **بررسی IP:** مطمئن شوید `آی‌پی_عمومی_ترکیه_را_اینجا_بگذارید` در پیکربندی ایران، آی‌پی **عمومی** سرور ترکیه است، نه آی‌پی داخلی WireGuard.
+-   **بررسی فایروال:** مطمئن شوید پورت 443 روی سرور ترکیه باز است (`sudo ufw allow 443/tcp`).
+-   **بررسی لاگ‌ها:** دستور `sudo sing-box run -c /etc/sing-box/config.json` (بدون `&`) را اجرا کنید تا خطاهای زمان واقعی را ببینید.
 
-### 2. DNS Leaks
--   Ensure your client (e.g., v2rayN on your local machine) is set to use `127.0.0.1:1080` as the proxy.
--   Enable "Remote DNS" or "DNS over HTTPS" in your client settings to ensure DNS queries also go through the tunnel.
+### ۲. نشت DNS
+-   مطمئن شوید کلاینت شما (مثلاً v2rayN روی ماشین محلی) طوری تنظیم شده باشد که از `127.0.0.1:1080` به عنوان پروکسی استفاده کند.
+-   گزینه "Remote DNS" یا "DNS over HTTPS" را در تنظیمات کلاینت خود فعال کنید تا اطمینان حاصل شود که درخواست‌های DNS نیز از طریق تونل می‌روند.
 
-### 3. Slow Speeds
--   **Check MTU:** WireGuard often requires MTU adjustment. Try setting MTU to `1420` on the WireGuard interface.
--   **Geographic Distance:** Turkey to Germany is usually fast. If it's slow, try changing the endpoint in the WireGuard config to a closer server if available.
-
-### 4. IP Blacklisting
--   If the Turkey VPS IP gets blacklisted by the censor:
-    1.  Migrate the Sing-Box configuration to a new VPS in a different location (e.g., Netherlands).
-    2.  Update the `server` IP in the Iran config.
-    3.  The Reality keys remain valid, so no re-generation is needed.
-
----
-
-## ⚖️ Disclaimer
-
-This software is provided for **educational, research, and testing purposes only**.
-
--   **Legal Compliance:** You are responsible for complying with all local, national, and international laws and regulations. Using this software to bypass government censorship may be illegal in your jurisdiction.
--   **No Warranty:** This software is provided "AS IS", without warranty of any kind, express or implied.
--   **Liability:** The developers are not responsible for any damages, data loss, or legal consequences resulting from the use of this project.
-
-**Use at your own risk.**
+### ۳. سرعت پایین
+-   **بررسی MTU:** WireGuard اغلب نیاز به تنظیم MTU دارد. سعی کنید MTU را روی اینترفیس WireGuard روی `1
