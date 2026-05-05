@@ -12,12 +12,7 @@
 ## 🚀 Overview
 
 `AyhanxGurd-Fredom iran` is not just a VPN; it is a **multi-layered privacy architecture** designed to bypass advanced DPI (Deep Packet Inspection) and network censorship. By combining **traffic normalization**, **multi-hop bridging**, and **DNS-over-HTTPS (DoH)** leakage prevention, this project ensures that your digital footprint remains invisible to local ISPs and national firewalls.
-Here is a comprehensive, deep-dive `README.md` for your project. This document is designed to be professional, technically rigorous, and educational, explaining the "why" and "how" behind every architectural decision.
-
-You can copy and paste the content below directly into a `README.md` file in your GitHub repository.
-
 ***
-
 # AyhanX-fredom: Advanced Multi-Hop Obfuscated Proxy Infrastructure
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
