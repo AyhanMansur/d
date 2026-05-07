@@ -31,7 +31,7 @@
 
 ## 🌍 Project Overview
 
-**MHR-Chain** is a resilient, multi-layered network infrastructure designed to bypass advanced state-level internet censorship, Deep Packet Inspection (DPI), and selective blackouts. Unlike standard VPN solutions that rely on single-point-of-failure connections, MHR-Chain utilizes a **three-node architecture** combining **Traffic Obfuscation** and **Secure Tunneling**.
+**AyhanX-fredom** is a resilient, multi-layered network infrastructure designed to bypass advanced state-level internet censorship, Deep Packet Inspection (DPI), and selective blackouts. Unlike standard VPN solutions that rely on single-point-of-failure connections, MHR-Chain utilizes a **three-node architecture** combining **Traffic Obfuscation** and **Secure Tunneling**.
 
 This project does not just "hide" traffic; it makes the traffic indistinguishable from legitimate, everyday web browsing, rendering it invisible to sophisticated censorship systems like those used in restrictive internet environments.
 
